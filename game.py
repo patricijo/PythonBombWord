@@ -3,7 +3,7 @@
 import words
 wordList = words.words.upper().split(' ')
 
-startLifes = 5
+startLife = 5
 startTimer = 20
 minTimer = 5
 timerDecreaseInSec = 1
@@ -16,7 +16,7 @@ import time
 
 ### Global Vars
 
-lifes = startLifes
+life = startLife
 points = 0
 timer = startTimer
 currentLetters = ''
@@ -96,19 +96,19 @@ def checkWord(letters, word, timeLeft):
 # toLate
 def toLate():
 
-    global lifes 
+    global life 
     global points 
     global timer 
     global currentLetters 
 
-    lifes = lifes - 1
+    life = life - 1
 
     print(randomWord + ' waere eine möglichkeit gewesen.')
 
-    if lifes > 0:
+    if life > 0:
         print('')
         
-        print('Du warst zu langsahm und hast noch ' + str(lifes) +' leben.')
+        print('Du warst zu langsahm und hast noch ' + str(life) +' leben.')
         print('')
         input('Beginne die nächste Runde mit Enter')
         runRound()
@@ -118,7 +118,7 @@ def toLate():
         print('GAMEOVER du hast ' + str(points) +' Punkte erreicht.')
         print('')
         input('Starte das Spiel mit Enter')
-        lifes = startLifes
+        life = startLife
         points = 0
         timer = startTimer
         currentLetters = ''
