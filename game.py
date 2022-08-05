@@ -1,20 +1,20 @@
-# Settings
+### Settings
 
 import words
 wordList = words.words.upper().split(' ')
 
 startLifes = 5
 startTimer = 20
-minTimer = 7
+minTimer = 5
 timerDecreaseInSec = 1
 pointsIncrement = 50
 
-# Imports 
+### Imports 
 
 from random import randrange
 import time
 
-# Global Vars
+### Global Vars
 
 lifes = startLifes
 points = 0
@@ -22,18 +22,51 @@ timer = startTimer
 currentLetters = ''
 randomWord = ''
 
-# Functions
+### Functions
 
+# runGame
+def runGame():
+    print('')
+    print('Willkommen zum Python Word Bomb Game!')
+    print('')
+    print('Finde ein Wort welches die Buchstabenkombination enthält.')
+    print('')
+    input('Starte das Spiel mit Enter')
+
+    runRound()
+
+# runRound
+def runRound():
+    setLetters()
+    start = time.time()
+    print('')
+    while time.time() - start < timer:
+      
+        timeLeft = timer - int(time.time() - start)
+        
+        print('Du hast noch ' + str(timeLeft) + ' sekunden zeit.')
+        print('')
+        userInput = input('Dein Wort mit '+ currentLetters +': ')
+        if userInput == 'skip': break
+        timeLeft = timer - int(time.time() - start) 
+        checkWord(currentLetters, userInput.upper(), timeLeft)
+
+    toLate()
+
+# setLetters
 def setLetters():
+
     global currentLetters 
     global randomWord
-    randomWord = wordList[randrange(len(wordList))]
-    lettersStartPoint = randrange(len(randomWord)-3)
 
-    
+    randomWord = wordList[randrange(len(wordList) -1)]
+    if len(randomWord) < 3:setLetters
+    if len(randomWord) == 3:lettersStartPoint = 0 
+    else:
+        lettersStartPoint = randrange(len(randomWord)-3)
     currentLetters = randomWord[lettersStartPoint:lettersStartPoint+3].upper()
 
-
+# checkWord
 def checkWord(letters, word, timeLeft):
 
     global points
@@ -46,11 +79,12 @@ def checkWord(letters, word, timeLeft):
     else:
         if word in wordList:
             if timeLeft > 0:
-                points = points + pointsIncrement * timeLeft
+                points = points + pointsIncrement * (startTimer - timer + timeLeft)
                 if timer > minTimer:
                     timer = timer-timerDecreaseInSec
                 print('')
-                print(word + ' ist Richtig! Dir werden ' + str(pointsIncrement * (startTimer - timeLeft)) + ' Punkte gutgeschrieben. Du hast jetzt ' + str(points) + ' Punkte')
+                print(word + ' ist Richtig! Dir werden ' + str(pointsIncrement * (startTimer - timer + timeLeft)) + ' Punkte gutgeschrieben. Du hast jetzt ' + str(points) + ' Punkte')
+                print('')
                 input('Starte die naechste Runde mit Enter')
                 runRound()
             
@@ -58,35 +92,8 @@ def checkWord(letters, word, timeLeft):
         else:
             print('')
             print('Wir konnten kein Wort namens ' + word + ' finden')
-   
-        
 
-def runGame():
-    print('')
-    print('Willkommen zum Python Word Bomb game!')
-    print('')
-    print('Finde ein Wort welches die Buchstabenkombination enthält.')
-    print('')
-    input('Starte das Spiel mit Enter')
-    while lifes > 0:
-        runRound()
-
-def runRound():
-    setLetters()
-    start = time.time()
-    print('')
-    while time.time() - start < timer:
-      
-        timeLeft = timer - int(time.time() - start)
-        
-        print('Du hast noch ' + str(timeLeft) + ' sekunden zeit.')
-        userInput = input('Dein Wort mit '+ currentLetters +': ')
-        timeLeft = timer - int(time.time() - start) #muss gemacht werden um die time nach dem input zu erfassen
-        checkWord(currentLetters, userInput.upper(), timeLeft)
-
-    toLate()
-
-
+# toLate
 def toLate():
 
     global lifes 
@@ -106,15 +113,18 @@ def toLate():
         input('Beginne die nächste Runde mit Enter')
         runRound()
     else:
-        print('')
+
         print('')
         print('GAMEOVER du hast ' + str(points) +' Punkte erreicht.')
+        print('')
         input('Starte das Spiel mit Enter')
         lifes = startLifes
         points = 0
         timer = startTimer
         currentLetters = ''
         runGame()
+
+###############
 
 runGame()
 
