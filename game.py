@@ -22,32 +22,95 @@ timer = startTimer
 currentLetters = ''
 randomWord = ''
 
-### Functions
+### SCREENS
+
+#startScreen
+def startScreen():
+    print('')
+    print('')
+    print('###################################')
+    print('#                                 #')
+    print('#          Willkommen zum         #')
+    print('#      Python Word Bomb Game!     #')
+    print('#                                 #')
+    print('#    siehe Regeln mit: "regeln"   #')
+    print('#     ueberspringe mit: "skip"    #')
+    print('###################################')
+    print('')
+
+#statusScreen
+def statusScreen():
+    print('')
+    print('')
+    print('###################################')
+    print('#                                 #')
+    print('#    LEBEN:' + str(life) + '       PUNKTE:' + str(format(points, '05d')) + '   #')
+    print('#                                 #')
+    print('#      DEINE BUCHSTABEN: ' + currentLetters + '      #')
+    print('#                                 #')
+    print('#                                 #')
+    print('###################################')
+    print('')
+
+#rulesScreen
+def rulesScreen():
+    print('')
+    print('')
+    print('###################################')
+    print('#                                 #')
+    print('#      1.Dein Wort muss die       #')
+    print('# Buchstabenkombination enthalten #')
+    print('#                                 #')
+    print('#     2. Nur Deutsche Woerter     #')
+    print('#                                 #')
+    print('###################################')
+    print('')
+
+#gameOverScreen
+def gameOverScreen():
+    print('')
+    print('')
+    print('###################################')
+    print('#                                 #')
+    print('#          GAME OVER!!!           #')
+    print('#                                 #')
+    print('#                                 #')
+    print('#          PUNKTE:' + str(format(points, '05d')) + '           #')
+    print('#                                 #')
+    print('###################################')
+    print('')
+ 
+### FUNCTIONS
 
 # runGame
 def runGame():
+    startScreen()
     print('')
-    print('Willkommen zum Python Word Bomb Game!')
-    print('')
-    print('Finde ein Wort welches die Buchstabenkombination enthält.')
-    print('')
-    input('Starte das Spiel mit Enter')
-
-    runRound()
+    userInput = input('Starte das Spiel mit Enter')
+    if userInput == 'regeln':
+        rulesScreen()
+        print('')
+        input('Starte das Spiel mit Enter')
+        runRound()
+    else:    
+        runRound()
 
 # runRound
 def runRound():
     setLetters()
     start = time.time()
-    print('')
     while time.time() - start < timer:
       
         timeLeft = timer - int(time.time() - start)
         
+        statusScreen()
         print('Du hast noch ' + str(timeLeft) + ' sekunden zeit.')
-        print('')
         userInput = input('Dein Wort mit '+ currentLetters +': ')
         if userInput == 'skip': break
+        if userInput == 'rules': 
+            rulesScreen()        
+            print('')
+            input('fortfahren mit Enter')
         timeLeft = timer - int(time.time() - start) 
         checkWord(currentLetters, userInput.upper(), timeLeft)
 
@@ -69,28 +132,35 @@ def setLetters():
 # checkWord
 def checkWord(letters, word, timeLeft):
 
+    
     global points
     global timer
 
     if letters not in word:
-        print('')
-        print(word + ' enthaelt die Buchstabenkombination ' + letters + ' nicht')
+
+        statusScreen()
+        print(word + ' enthaelt die Buchstabenkombination ' + letters + ' nicht!')
     
     else:
         if word in wordList:
             if timeLeft > 0:
-                points = points + pointsIncrement * (startTimer - timer + timeLeft)
+
+                pointsToAdd = pointsIncrement * (startTimer - timer + timeLeft)
+                points = points + pointsToAdd
+                statusScreen()
+
                 if timer > minTimer:
                     timer = timer-timerDecreaseInSec
-                print('')
-                print(word + ' ist Richtig! Dir werden ' + str(pointsIncrement * (startTimer - timer + timeLeft)) + ' Punkte gutgeschrieben. Du hast jetzt ' + str(points) + ' Punkte')
-                print('')
+           
+                print(word + ' ist Richtig! Dir werden ' + str(pointsToAdd) + ' Punkte gutgeschrieben. Du hast jetzt ' + str(points) + ' Punkte')
+              
                 input('Starte die naechste Runde mit Enter')
                 runRound()
             
             
         else:
-            print('')
+            
+            statusScreen()
             print('Wir konnten kein Wort namens ' + word + ' finden')
 
 # toLate
@@ -103,20 +173,19 @@ def toLate():
 
     life = life - 1
 
+    
+    statusScreen()
     print(randomWord + ' waere eine möglichkeit gewesen.')
 
     if life > 0:
-        print('')
+ 
         
-        print('Du warst zu langsahm und hast noch ' + str(life) +' leben.')
-        print('')
+        print('Du warst zu langsahm!')
         input('Beginne die nächste Runde mit Enter')
         runRound()
     else:
 
-        print('')
-        print('GAMEOVER du hast ' + str(points) +' Punkte erreicht.')
-        print('')
+        gameOverScreen()
         input('Starte das Spiel mit Enter')
         life = startLife
         points = 0
