@@ -141,7 +141,7 @@ def checkWord(letters, word, timeLeft):
     global points
     global timer
 
-    if timeLeft > 0:
+    if timeLeft < 1:
         toLate()
 
     elif letters not in word:
