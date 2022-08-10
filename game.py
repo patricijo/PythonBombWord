@@ -141,34 +141,31 @@ def checkWord(letters, word, timeLeft):
     global points
     global timer
 
-    if letters not in word:
+    if timeLeft > 0:
+        toLate()
 
+    elif letters not in word:
         statusScreen()
         print(word + ' enthaelt die Buchstabenkombination ' + letters + ' nicht!')
         input('fortfahren mit Enter: ')
-    
-    else:
-        if word in wordList:
-            if timeLeft > 0:
 
-                pointsToAdd = pointsIncrement * (startTimer - timer + timeLeft)
-                points = points + pointsToAdd
-                statusScreen()
+    elif word in wordList:
+        pointsToAdd = pointsIncrement * (startTimer - timer + timeLeft)
+        points = points + pointsToAdd
+        statusScreen()
 
-                if timer > minTimer:
-                    timer = timer-timerDecreaseInSec
+        if timer > minTimer:
+            timer = timer-timerDecreaseInSec
            
-                print(word + ' ist Richtig! Dir werden ' + str(pointsToAdd) + ' Punkte gutgeschrieben. Du hast jetzt ' + str(points) + ' Punkte')
+        print(word + ' ist Richtig! Dir werden ' + str(pointsToAdd) + ' Punkte gutgeschrieben. Du hast jetzt ' + str(points) + ' Punkte')
               
-                input('Starte die naechste Runde mit Enter: ')
-                runRound()
-            
-            
-        else:
-            
-            statusScreen()
-            print('Wir konnten kein Wort namens ' + word + ' finden')
-            input('fortfahren mit Enter: ')
+        input('Starte die naechste Runde mit Enter: ')
+        runRound()
+
+    else:
+        statusScreen()
+        print('Wir konnten kein Wort namens ' + word + ' finden')
+        input('fortfahren mit Enter: ')
 
 # toLate
 def toLate():
@@ -179,9 +176,6 @@ def toLate():
     global currentLetters 
 
     life = life - 1
-
-    
-
 
     if life > 0:
         statusScreen()
