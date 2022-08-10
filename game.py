@@ -86,11 +86,11 @@ def gameOverScreen():
 def runGame():
     startScreen()
     print('')
-    userInput = input('Starte das Spiel mit Enter')
+    userInput = input('Starte das Spiel mit Enter: ')
     if userInput == 'regeln':
         rulesScreen()
         print('')
-        input('Starte das Spiel mit Enter')
+        input('Starte das Spiel mit Enter: ')
         runRound()
     else:    
         runRound()
@@ -110,7 +110,7 @@ def runRound():
         if userInput == 'regeln': 
             rulesScreen()        
             print('')
-            input('fortfahren mit Enter')
+            input('fortfahren mit Enter: ')
         timeLeft = timer - int(time.time() - start) 
         checkWord(currentLetters, userInput.upper(), timeLeft)
 
@@ -186,7 +186,8 @@ def toLate():
     else:
 
         gameOverScreen()
-        input('Starte das Spiel mit Enter')
+        print(randomWord + ' waere eine möglichkeit gewesen.')
+        input('Starte das Spiel mit Enter: ')
         life = startLife
         points = 0
         timer = startTimer
