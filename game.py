@@ -107,7 +107,7 @@ def runRound():
         print('Du hast noch ' + str(timeLeft) + ' sekunden zeit.')
         userInput = input('Dein Wort mit '+ currentLetters +': ')
         if userInput == 'skip': break
-        if userInput == 'rules': 
+        if userInput == 'regeln': 
             rulesScreen()        
             print('')
             input('fortfahren mit Enter')
