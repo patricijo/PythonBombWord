@@ -187,7 +187,7 @@ def toLate():
         statusScreen()
         print('Du warst zu langsahm!')
         print(randomWord + ' waere eine möglichkeit gewesen.')
-        input('Beginne die nächste Runde mit Enter')
+        input('Beginne die nächste Runde mit Enter: ')
         runRound()
     else:
 
