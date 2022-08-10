@@ -13,6 +13,7 @@ pointsIncrement = 50
 
 from random import randrange
 import time
+from os import system, name
 
 ### Global Vars
 
@@ -26,6 +27,7 @@ randomWord = ''
 
 #startScreen
 def startScreen():
+    clear()
     print('')
     print('')
     print('###################################')
@@ -40,6 +42,7 @@ def startScreen():
 
 #statusScreen
 def statusScreen():
+    clear()
     print('')
     print('')
     print('###################################')
@@ -54,6 +57,7 @@ def statusScreen():
 
 #rulesScreen
 def rulesScreen():
+    clear()
     print('')
     print('')
     print('###################################')
@@ -68,6 +72,7 @@ def rulesScreen():
 
 #gameOverScreen
 def gameOverScreen():
+    clear()
     print('')
     print('')
     print('###################################')
@@ -140,6 +145,7 @@ def checkWord(letters, word, timeLeft):
 
         statusScreen()
         print(word + ' enthaelt die Buchstabenkombination ' + letters + ' nicht!')
+        input('fortfahren mit Enter: ')
     
     else:
         if word in wordList:
@@ -154,7 +160,7 @@ def checkWord(letters, word, timeLeft):
            
                 print(word + ' ist Richtig! Dir werden ' + str(pointsToAdd) + ' Punkte gutgeschrieben. Du hast jetzt ' + str(points) + ' Punkte')
               
-                input('Starte die naechste Runde mit Enter')
+                input('Starte die naechste Runde mit Enter: ')
                 runRound()
             
             
@@ -162,6 +168,7 @@ def checkWord(letters, word, timeLeft):
             
             statusScreen()
             print('Wir konnten kein Wort namens ' + word + ' finden')
+            input('fortfahren mit Enter: ')
 
 # toLate
 def toLate():
@@ -174,18 +181,18 @@ def toLate():
     life = life - 1
 
     
-    statusScreen()
-    print(randomWord + ' waere eine möglichkeit gewesen.')
+
 
     if life > 0:
- 
-        
+        statusScreen()
         print('Du warst zu langsahm!')
+        print(randomWord + ' waere eine möglichkeit gewesen.')
         input('Beginne die nächste Runde mit Enter')
         runRound()
     else:
 
         gameOverScreen()
+        print('Du warst zu langsahm!')
         print(randomWord + ' waere eine möglichkeit gewesen.')
         input('Starte das Spiel mit Enter: ')
         life = startLife
@@ -193,6 +200,16 @@ def toLate():
         timer = startTimer
         currentLetters = ''
         runGame()
+
+#clear
+def clear():
+   # for windows
+   if name == 'nt':
+      _ = system('cls')
+
+   # for mac and linux
+   else:
+    _ = system('clear')
 
 ###############
 
