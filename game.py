@@ -1,21 +1,21 @@
-### Settings
+# Settings
 
+from os import system, name
+import time
+from random import randrange
 import words
 wordList = words.words.upper().split(' ')
 
-startLife = 5
+startLife = 3
 startTimer = 20
 minTimer = 5
 timerDecreaseInSec = 1
 pointsIncrement = 50
 
-### Imports 
+# Imports
 
-from random import randrange
-import time
-from os import system, name
 
-### Global Vars
+# Global Vars
 
 life = startLife
 points = 0
@@ -23,9 +23,11 @@ timer = startTimer
 currentLetters = ''
 randomWord = ''
 
-### SCREENS
+# SCREENS
 
-#startScreen
+# startScreen
+
+
 def startScreen():
     clear()
     print('')
@@ -40,14 +42,17 @@ def startScreen():
     print('###################################')
     print('')
 
-#statusScreen
+# statusScreen
+
+
 def statusScreen():
     clear()
     print('')
     print('')
     print('###################################')
     print('#                                 #')
-    print('#    LEBEN:' + str(life) + '       PUNKTE:' + str(format(points, '05d')) + '   #')
+    print('#    LEBEN:' + str(life) + '       PUNKTE:' +
+          str(format(points, '05d')) + '   #')
     print('#                                 #')
     print('#      DEINE BUCHSTABEN: ' + currentLetters + '      #')
     print('#                                 #')
@@ -55,7 +60,9 @@ def statusScreen():
     print('###################################')
     print('')
 
-#rulesScreen
+# rulesScreen
+
+
 def rulesScreen():
     clear()
     print('')
@@ -70,7 +77,9 @@ def rulesScreen():
     print('###################################')
     print('')
 
-#gameOverScreen
+# gameOverScreen
+
+
 def gameOverScreen():
     clear()
     print('')
@@ -84,10 +93,12 @@ def gameOverScreen():
     print('#                                 #')
     print('###################################')
     print('')
- 
-### FUNCTIONS
+
+# FUNCTIONS
 
 # runGame
+
+
 def runGame():
     startScreen()
     print('')
@@ -97,47 +108,55 @@ def runGame():
         print('')
         input('Starte das Spiel mit Enter: ')
         runRound()
-    else:    
+    else:
         runRound()
 
 # runRound
+
+
 def runRound():
     setLetters()
     start = time.time()
     while time.time() - start < timer:
-      
+
         timeLeft = timer - int(time.time() - start)
-        
+
         statusScreen()
         print('Du hast noch ' + str(timeLeft) + ' sekunden zeit.')
-        userInput = input('Dein Wort mit '+ currentLetters +': ')
-        if userInput == 'skip': break
-        if userInput == 'regeln': 
-            rulesScreen()        
+        userInput = input('Dein Wort mit ' + currentLetters + ': ')
+        if userInput == 'skip':
+            break
+        if userInput == 'regeln':
+            rulesScreen()
             print('')
             input('fortfahren mit Enter: ')
-        timeLeft = timer - int(time.time() - start) 
+        timeLeft = timer - int(time.time() - start)
         checkWord(currentLetters, userInput.upper(), timeLeft)
 
     toLate()
 
 # setLetters
+
+
 def setLetters():
 
-    global currentLetters 
+    global currentLetters
     global randomWord
 
-    randomWord = wordList[randrange(len(wordList) -1)]
-    if len(randomWord) < 3:setLetters
-    if len(randomWord) == 3:lettersStartPoint = 0 
+    randomWord = wordList[randrange(len(wordList) - 1)]
+    if len(randomWord) < 3:
+        setLetters
+    if len(randomWord) == 3:
+        lettersStartPoint = 0
     else:
         lettersStartPoint = randrange(len(randomWord)-3)
     currentLetters = randomWord[lettersStartPoint:lettersStartPoint+3].upper()
 
 # checkWord
+
+
 def checkWord(letters, word, timeLeft):
 
-    
     global points
     global timer
 
@@ -156,9 +175,10 @@ def checkWord(letters, word, timeLeft):
 
         if timer > minTimer:
             timer = timer-timerDecreaseInSec
-           
-        print(word + ' ist Richtig! Dir werden ' + str(pointsToAdd) + ' Punkte gutgeschrieben. Du hast jetzt ' + str(points) + ' Punkte')
-              
+
+        print(word + ' ist Richtig! Dir werden ' + str(pointsToAdd) +
+              ' Punkte gutgeschrieben. Du hast jetzt ' + str(points) + ' Punkte')
+
         input('Starte die naechste Runde mit Enter: ')
         runRound()
 
@@ -168,12 +188,14 @@ def checkWord(letters, word, timeLeft):
         input('fortfahren mit Enter: ')
 
 # toLate
+
+
 def toLate():
 
-    global life 
-    global points 
-    global timer 
-    global currentLetters 
+    global life
+    global points
+    global timer
+    global currentLetters
 
     life = life - 1
 
@@ -195,35 +217,19 @@ def toLate():
         currentLetters = ''
         runGame()
 
-#clear
-def clear():
-   # for windows
-   if name == 'nt':
-      _ = system('cls')
+# clear
 
-   # for mac and linux
-   else:
-    _ = system('clear')
+
+def clear():
+    # for windows
+    if name == 'nt':
+        _ = system('cls')
+
+    # for mac and linux
+    else:
+        _ = system('clear')
 
 ###############
 
+
 runGame()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
